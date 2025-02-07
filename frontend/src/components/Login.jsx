@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [message, setMessage] = useState("");
@@ -28,9 +28,11 @@ const Login = () => {
 
             console.log(res.data);
             setUser(res.data.user);
+            
             localStorage.setItem("user", JSON.stringify(res.data.user));
         } catch (err) {
-            setMessage(err.response?.data?.error || "Login failed");
+            // setMessage(err.response?.data?.error || "Login failed");
+            setMessage(err.response.error)
             console.error(err.response ? err.response.data : "Request Failed");
         }
     };
@@ -81,6 +83,7 @@ const Login = () => {
                             >
                                 Login
                             </button>
+                            <p className="text text-sm ">Dont have an Account <Link to="/register"><span className="underline text-emerald-950">Register Here</span></Link></p>
                         </form>
                         {message && <p className="text-center mt-4 text-red-500">{message}</p>}
                     </>
